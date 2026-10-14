@@ -1,0 +1,32 @@
+# 临时浏览器配置目录（PDF 导出 / 预览时产生）
+.edge-*/
+.edge-dump-profile/
+.edge-headless/
+.edge-headless-review/
+.edge-pdf-export/
+.edge-pdf-review/
+
+# PDF 渲染校验截图
+.review/
+
+# 生成概念图时的接口回执等过程产物
+*-wait-results.jsonl
+
+# 概念图原始版（仓库只保留 -unified 定稿版）
+docs/game-design/concept-art/*.jpeg
+!docs/game-design/concept-art/*-unified.jpeg
+
+# 作品集历史版本（仓库只保留最终版）
+docs/portfolio/*-v[0-9].pdf
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# 依赖与构建产物
+node_modules/
+dist/
+*.log

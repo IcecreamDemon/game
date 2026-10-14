@@ -1,0 +1,1535 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="赵子杭">
+  <title>十二神相录：作品集概念设计案</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #66717c;
+      --line: #cfd6da;
+      --paper: #fbfaf7;
+      --panel: #ffffff;
+      --red: #c44935;
+      --teal: #24717a;
+      --gold: #bd8b2f;
+      --blue: #315d8c;
+      --soft: #edf1f2;
+      --soft-red: #f7e8e4;
+      --soft-teal: #e6f0f0;
+      --soft-gold: #f5eedf;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      margin: 0;
+      padding: 0;
+      background: #d8dcde;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #d8dcde;
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", sans-serif;
+      font-size: 10pt;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    ul,
+    ol {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 34pt;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 21pt;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: 7px;
+      font-size: 12pt;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin-bottom: 8px;
+    }
+
+    ul,
+    ol {
+      margin-bottom: 8px;
+      padding-left: 18px;
+    }
+
+    li {
+      margin-bottom: 3px;
+    }
+
+    strong {
+      color: #101820;
+    }
+
+    .page {
+      position: relative;
+      width: 210mm;
+      height: 296.8mm;
+      margin: 0 auto;
+      padding: 15mm 15mm 13mm;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(36, 113, 122, 0.025) 1px, transparent 1px),
+        linear-gradient(rgba(196, 73, 53, 0.022) 1px, transparent 1px),
+        var(--paper);
+      background-size: 16mm 16mm;
+      break-after: page;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+
+    .page.cover {
+      padding: 18mm 17mm 15mm;
+      color: #f6f2e8;
+      background:
+        linear-gradient(148deg, rgba(196, 73, 53, 0.22), transparent 38%),
+        linear-gradient(330deg, rgba(36, 113, 122, 0.32), transparent 45%),
+        #17212b;
+    }
+
+    .cover-rule {
+      width: 34mm;
+      height: 3mm;
+      margin: 0 0 12mm;
+      background: var(--red);
+    }
+
+    .cover-kicker {
+      margin-bottom: 7mm;
+      color: #e8c679;
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+
+    .cover-author {
+      margin-bottom: 5mm;
+      color: #ffffff;
+      font-size: 14pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .cover-author span {
+      color: #91a0aa;
+      font-size: 9pt;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+    }
+
+    .cover h1 {
+      max-width: 160mm;
+      margin-bottom: 8mm;
+      color: #ffffff;
+      font-size: 38pt;
+    }
+
+    .cover-subtitle {
+      max-width: 148mm;
+      margin-bottom: 6mm;
+      color: #c8d2d8;
+      font-size: 13pt;
+      line-height: 1.65;
+    }
+
+    .cover-tagline {
+      margin-bottom: 0;
+      color: #e8c679;
+      font-size: 16pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .cover-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5mm;
+      width: 174mm;
+      margin-top: 22mm;
+    }
+
+    .cover-meta div {
+      padding-top: 4mm;
+      border-top: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    .cover-meta span {
+      display: block;
+      color: #91a0aa;
+      font-size: 8.5pt;
+    }
+
+    .cover-meta strong {
+      display: block;
+      margin-top: 2mm;
+      color: #ffffff;
+      font-size: 11pt;
+    }
+
+    .cover-mark {
+      position: absolute;
+      right: 12mm;
+      bottom: 7mm;
+      color: rgba(255, 255, 255, 0.065);
+      font-size: 110pt;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .cover-foot {
+      position: absolute;
+      left: 17mm;
+      right: 17mm;
+      bottom: 16mm;
+      display: flex;
+      justify-content: space-between;
+      color: #9ca8af;
+      font-size: 8pt;
+      letter-spacing: 0.08em;
+    }
+
+    .page-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 8mm;
+      padding-bottom: 3mm;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-label {
+      color: var(--red);
+      font-size: 8.5pt;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+    }
+
+    .page-title {
+      margin-top: 2mm;
+      font-size: 21pt;
+      font-weight: 800;
+      line-height: 1.18;
+    }
+
+    .page-no {
+      min-width: 18mm;
+      color: var(--muted);
+      font-size: 9pt;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .lead {
+      max-width: 166mm;
+      color: #35414b;
+      font-size: 11pt;
+      line-height: 1.65;
+    }
+
+    .rule {
+      height: 1px;
+      margin: 6mm 0;
+      background: var(--line);
+    }
+
+    .rule.short {
+      width: 24mm;
+      height: 2mm;
+      margin: 0 0 7mm;
+      background: var(--red);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3.5mm;
+    }
+
+    .panel {
+      padding: 5mm;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .panel.soft {
+      border-color: transparent;
+      background: var(--soft);
+    }
+
+    .panel.red {
+      border-color: #e2aaa0;
+      background: var(--soft-red);
+    }
+
+    .panel.teal {
+      border-color: #a7c9ca;
+      background: var(--soft-teal);
+    }
+
+    .panel.gold {
+      border-color: #ddc68f;
+      background: var(--soft-gold);
+    }
+
+    .panel p:last-child,
+    .panel ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .mini-label {
+      display: block;
+      margin-bottom: 3mm;
+      color: var(--teal);
+      font-size: 8pt;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .metric {
+      padding: 4mm 0;
+      border-top: 3px solid var(--red);
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 2mm;
+      font-size: 17pt;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 9pt;
+    }
+
+    .index-list {
+      counter-reset: item;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .index-list li {
+      position: relative;
+      min-height: 16mm;
+      padding: 3mm 0 3mm 14mm;
+      border-top: 1px solid var(--line);
+      color: #35414b;
+    }
+
+    .index-list li::before {
+      counter-increment: item;
+      content: counter(item, decimal-leading-zero);
+      position: absolute;
+      top: 3mm;
+      left: 0;
+      color: var(--red);
+      font-size: 9pt;
+      font-weight: 800;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 1.5mm 2.5mm;
+      border: 1px solid #b6c2c8;
+      border-radius: 4px;
+      color: #34414b;
+      background: #ffffff;
+      font-size: 8.5pt;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .callout {
+      margin: 5mm 0;
+      padding: 5mm 6mm;
+      border-left: 4px solid var(--red);
+      background: #f2f0ea;
+      font-size: 11pt;
+      font-weight: 700;
+      line-height: 1.65;
+    }
+
+    .flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 7mm 0;
+    }
+
+    .flow-node {
+      position: relative;
+      flex: 1;
+      min-height: 25mm;
+      padding: 4mm 3.5mm;
+      border: 1px solid #b8c3c9;
+      background: #ffffff;
+    }
+
+    .flow-node + .flow-node {
+      border-left: 0;
+    }
+
+    .flow-node::after {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      right: -3mm;
+      width: 6mm;
+      height: 6mm;
+      border-top: 1px solid var(--teal);
+      border-right: 1px solid var(--teal);
+      background: var(--paper);
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .flow-node:last-child::after {
+      display: none;
+    }
+
+    .flow-node strong {
+      display: block;
+      margin-bottom: 2mm;
+      font-size: 10pt;
+    }
+
+    .flow-node span {
+      color: var(--muted);
+      font-size: 8.5pt;
+      line-height: 1.45;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.7pt;
+    }
+
+    .matrix th {
+      padding: 3mm 3mm;
+      border: 1px solid #aebbc1;
+      color: #ffffff;
+      background: var(--teal);
+      text-align: left;
+      font-size: 8.5pt;
+      font-weight: 800;
+    }
+
+    .matrix td {
+      padding: 2.6mm 3mm;
+      border: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .matrix tr:nth-child(even) td {
+      background: #f2f4f3;
+    }
+
+    .matrix .accent {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .diagram {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .diagram text {
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      fill: var(--ink);
+    }
+
+    .caption {
+      margin-top: 2.5mm;
+      color: var(--muted);
+      font-size: 8pt;
+      line-height: 1.45;
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 31mm 1fr;
+      gap: 2mm 4mm;
+      margin: 4mm 0;
+    }
+
+    .kv dt {
+      color: var(--muted);
+      font-size: 8.5pt;
+    }
+
+    .kv dd {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .arena {
+      position: relative;
+      height: 67mm;
+      overflow: hidden;
+      border: 1px solid #9fb0b8;
+      background:
+        linear-gradient(180deg, #f1f5f5 0 60%, #e3e7e4 60% 100%);
+    }
+
+    .arena .platform {
+      position: absolute;
+      height: 4mm;
+      border: 1px solid #8d9ba2;
+      background: #c7d0d3;
+    }
+
+    .arena .ground {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 14mm;
+      border-top: 2px solid #53636b;
+      background: repeating-linear-gradient(90deg, #aab6b9 0 8mm, #b9c4c6 8mm 16mm);
+    }
+
+    .arena .tunnel {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 49%;
+      height: 7mm;
+      border-top: 3px dashed var(--red);
+      background: rgba(196, 73, 53, 0.12);
+    }
+
+    .arena .flight {
+      position: absolute;
+      top: 8mm;
+      right: 8mm;
+      width: 73mm;
+      height: 31mm;
+      border: 2px dashed rgba(36, 113, 122, 0.62);
+      background: rgba(36, 113, 122, 0.08);
+    }
+
+    .arena .fighter {
+      position: absolute;
+      display: grid;
+      width: 14mm;
+      height: 14mm;
+      place-items: center;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: #ffffff;
+      font-weight: 900;
+    }
+
+    .arena .fighter.one {
+      left: 25mm;
+      bottom: 14mm;
+      color: var(--red);
+    }
+
+    .arena .fighter.two {
+      right: 25mm;
+      bottom: 14mm;
+      color: var(--teal);
+    }
+
+    .arena .marker {
+      position: absolute;
+      padding: 1.5mm 2.5mm;
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 8pt;
+      font-weight: 800;
+    }
+
+    .arena .marker.tunnel {
+      left: 35mm;
+      bottom: 3mm;
+      background: var(--red);
+    }
+
+    .arena .marker.flight {
+      right: 7mm;
+      top: 6mm;
+      background: var(--teal);
+    }
+
+    .phase-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+    }
+
+    .phase {
+      position: relative;
+      min-height: 52mm;
+      padding: 5mm;
+      border-top: 4px solid var(--red);
+      background: #ffffff;
+      box-shadow: 0 0 0 1px var(--line);
+    }
+
+    .phase:nth-child(2) {
+      border-color: var(--gold);
+    }
+
+    .phase:nth-child(3) {
+      border-color: var(--teal);
+    }
+
+    .phase-no {
+      display: block;
+      margin-bottom: 3mm;
+      color: var(--muted);
+      font-size: 8pt;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .phase h3 {
+      margin-bottom: 3mm;
+      font-size: 11pt;
+    }
+
+    .phase p {
+      margin-bottom: 3mm;
+      color: #43505a;
+      font-size: 8.7pt;
+    }
+
+    .closing-box {
+      margin-top: 8mm;
+      padding: 7mm;
+      color: #ffffff;
+      background: var(--ink);
+    }
+
+    .closing-box h3 {
+      color: #ffffff;
+      font-size: 14pt;
+    }
+
+    .closing-box p {
+      margin-bottom: 0;
+      color: #c8d2d8;
+    }
+
+    .page-foot {
+      position: absolute;
+      right: 15mm;
+      bottom: 7mm;
+      left: 15mm;
+      display: flex;
+      justify-content: space-between;
+      color: #8a959c;
+      font-size: 7.5pt;
+      letter-spacing: 0.05em;
+    }
+
+    .page-foot strong {
+      color: var(--red);
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      html,
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-rule"></div>
+    <div class="cover-kicker">GAME DESIGN PORTFOLIO / SYSTEMS × LEVELS</div>
+    <div class="cover-author"><span>DESIGN / </span>赵子杭</div>
+    <h1>十二神相录</h1>
+    <p class="cover-subtitle">
+      十二生肖横版动作 Roguelite。用生肖能力改写竞技场规则，以局内构筑制造变化，并在死亡与记录中拼出阎王隐瞒的真相。
+    </p>
+    <p class="cover-tagline">天书无名，人间有相</p>
+    <div class="cover-meta">
+      <div><span>项目阶段</span><strong>概念设计案</strong></div>
+      <div><span>核心类型</span><strong>2D 横版 1v1 动作 Roguelite</strong></div>
+      <div><span>文档目的</span><strong>展示设计推导、系统联动与关卡案例</strong></div>
+    </div>
+    <div class="cover-mark">斗</div>
+    <div class="cover-foot">
+      <span>赵子杭 / 游戏策划作品集</span>
+      <span>2026</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">01 / PROJECT OVERVIEW</div>
+        <div class="page-title">项目概览</div>
+      </div>
+      <div class="page-no">02</div>
+    </header>
+
+    <p class="lead">
+      主线围绕冷峻寡言的鼠光展开。十二生肖在同一次登天战中全部阵亡，阎王以一次性还魂契把鼠光送回天路；玩家在分支地图上选择路线，获得武器、武功秘籍、防具与信物，并即时改变本局战斗方式。
+    </p>
+
+    <div class="callout">
+      核心玩家幻想：用鼠光的武功与能力持续登天，在一次次死亡中识破阎王，并决定自己究竟为百姓、为同伴，还是为复仇而战。
+    </div>
+
+    <div class="grid-4">
+      <div class="metric"><strong>60–120</strong><span>分钟 / 单局目标时长</span></div>
+      <div class="metric"><strong>20</strong><span>节点 / 完整登天局</span></div>
+      <div class="metric"><strong>3–5</strong><span>轮 / 正常主线目标</span></div>
+      <div class="metric"><strong>2</strong><span>结局 / 正常与断轮</span></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <h3>四条设计支柱</h3>
+    <div class="grid-2">
+      <div class="panel red">
+        <span class="mini-label">01 / CHARACTER AS RULE</span>
+        <h3>角色就是规则</h3>
+        <p>鼠可进入地洞，龙可消耗气力飞行。生肖能力改变移动、站位和关卡路线，而不是只提供数值差异。</p>
+      </div>
+      <div class="panel gold">
+        <span class="mini-label">02 / BUILD IN RUN</span>
+        <h3>构筑发生在局内</h3>
+        <p>武器决定基础连招，秘籍拾取后即时生效，玩家必须根据路线与敌人临时调整招式组合。</p>
+      </div>
+      <div class="panel teal">
+        <span class="mini-label">03 / HOST MORAL COST</span>
+        <h3>寄身产生道德代价</h3>
+        <p>每轮都有一名清醒的承愿者被压制在体内。无论通关还是死亡，身体最终都会衰亡。</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">04 / READABLE DUELS</span>
+        <h3>对决必须可读</h3>
+        <p>高强度攻击拥有清楚预备动作；即使阎王复制玩家习惯，反击也必须可识别、可破解。</p>
+      </div>
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>02</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">02 / WORLD & TRUTH</div>
+        <div class="page-title">世界与真相</div>
+      </div>
+      <div class="page-no">03</div>
+    </header>
+
+    <p class="lead">
+      天庭统治三界，却将凡人视为维持秩序的成本。十二生肖不是天庭敕封的神将，而是代表农户、百姓与普通劳动者的民间抵抗者。他们从不同方向共同进攻天庭，最终全部阵亡。
+    </p>
+
+    <div class="grid-2">
+      <div class="panel red">
+        <span class="mini-label">PLAYER BELIEF</span>
+        <h3>玩家最初知道的事</h3>
+        <p>鼠光首次战死后，阎王以一次性还魂契把他送回。此后阎王声称使用的是已经死亡、自愿帮助英雄的身体，隐瞒承愿者仍然活着。</p>
+      </div>
+      <div class="panel teal">
+        <span class="mini-label">HIDDEN TRUTH</span>
+        <h3>被掩盖的真相</h3>
+        <p>第一次还魂使用鼠光自己的身体。后续每轮使用一名活着的承愿者，他们全程清醒，能感受疼痛却无法控制身体。无论胜负，身体最终都会死亡。</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+    <h3>三层真相</h3>
+    <div class="grid-3">
+      <div class="panel soft">
+        <span class="mini-label">一层 / 信任</span>
+        <p>阎王是唯一愿意帮助十二生肖的神，还魂契是共同反抗天庭的必要代价。</p>
+      </div>
+      <div class="panel gold">
+        <span class="mini-label">二层 / 活借</span>
+        <p>鼠光已经死了。后续每次回归都寄宿在活人身上，让对方清醒承受战斗，而鼠光对真相一无所知。</p>
+      </div>
+      <div class="panel red">
+        <span class="mini-label">三层 / 取代</span>
+        <p>阎王从未想帮助民间。他利用十二生肖削弱天庭、收集战斗数据，准备取代玉皇。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      公开称呼是“承愿者”，阎王台账中却写作“活借”，系统统一称“寄身者”。这套语言差异直接表现阎王如何把活人包装成可以消耗的工具。
+    </div>
+
+    <div class="grid-3">
+      <div class="panel soft"><span class="mini-label">玄简</span><p>掌籍郎。被阎王扣押生死簿页，暗中保存十二生肖的真名与残页。</p></div>
+      <div class="panel soft"><span class="mini-label">兔昭</span><p>鼠光唯一愿意信任的朋友。乐观、相信未来，却在同一场登天战中牺牲。</p></div>
+      <div class="panel soft"><span class="mini-label">阎王</span><p>表面是冥府管理者与秘密盟友，实际以还魂契为吸收通道，等待夺取天庭。</p></div>
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 世界观与叙事</span>
+      <span>03</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">03 / NARRATIVE & ENDINGS</div>
+        <div class="page-title">叙事结构与双终局</div>
+      </div>
+      <div class="page-no">04</div>
+    </header>
+
+    <p class="lead">
+      主线固定围绕鼠光。兔昭拥有一段不可替代的战斗短章，其他生肖通过旧我、小神仙事件与轮回试炼补充群像。所有剧情插入都发生在返回冥府或区域结算之后，不打断进行中的战斗。
+    </p>
+
+    <div class="flow">
+      <div class="flow-node"><strong>序章</strong><span>共同登天，鼠光与兔昭先后战死</span></div>
+      <div class="flow-node"><strong>活体寄身</strong><span>阎王谎称使用的是死者身体</span></div>
+      <div class="flow-node"><strong>登天调查</strong><span>旧我逐渐像玩家，线索分散在路线中</span></div>
+      <div class="flow-node"><strong>击败玉皇</strong><span>双方互相算计，阎王将还魂契变成吸收通道</span></div>
+      <div class="flow-node"><strong>终局分岔</strong><span>正常路线或提前收集证词后的断轮路线</span></div>
+    </div>
+
+    <div class="rule"></div>
+    <div class="grid-2">
+      <div class="panel red">
+        <span class="mini-label">NORMAL ENDING</span>
+        <h3>正常结局：轮回吞没</h3>
+        <ul>
+          <li>玉皇揭露自己一直用鼠光作诱饵；阎王则早有预谋，等待夺取玉皇力量。</li>
+          <li>玉皇被杀死，阎王顺着还魂契吸收其神魂与权柄。</li>
+          <li>玄简牺牲自己的生死簿页，把鼠光从契约中拉出。</li>
+          <li>最终战分三阶段：夺天、旧相、判录。</li>
+          <li>鼠光与失控的轮回一同消失；天庭崩解，但伤亡无法挽回。</li>
+          <li>多数被困承愿者随冥府崩坏失散，只有少数灵魂逃出。</li>
+          <li>百姓只记得十二生肖的故事，最终形成《十二神相录》。</li>
+        </ul>
+      </div>
+      <div class="panel teal">
+        <span class="mini-label">HIDDEN ENDING</span>
+        <h3>断轮结局：主动宣战</h3>
+        <ul>
+          <li>关键轮回证词集齐后，结算界面出现“断轮门”。</li>
+          <li>提前击败未吸收玉皇的阎王，获得附着于所有武器的“断轮印”。</li>
+          <li>断轮印可破除神力护盾、复活和锁定状态，不提供高额数值。</li>
+          <li>以一条命完成 20 节点登天，区域 Boss 后仅恢复部分生命。</li>
+          <li>未被使用的承愿者回到人间，所有被困灵魂获释；最终寄身者身体死亡但灵魂能够轮回。</li>
+          <li>击败并封印玉皇，兔昭获释，玄简保住姓名。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      断轮路线死亡后回到断轮门，保留证词但失去断轮印；击败缩短版阎王残念后可重新挑战。隐藏结局更困难，也让更多人活下来，但鼠光仍需留在冥府守望轮回。
+    </div>
+
+    <div class="grid-3">
+      <div class="panel soft"><span class="mini-label">线索</span><p>部分小神仙事件、兔昭残页与猴影档案共同构成轮回见闻。</p></div>
+      <div class="panel soft"><span class="mini-label">终局主题</span><p>阎王能复制招式与习惯，却无法复制鼠光改变自己的选择。</p></div>
+      <div class="panel soft"><span class="mini-label">角色弧光</span><p>鼠光从冷峻复仇，走向承担活借带来的责任。</p></div>
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 世界观与叙事</span>
+      <span>04</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">04 / CORE LOOP</div>
+        <div class="page-title">核心循环</div>
+      </div>
+      <div class="page-no">05</div>
+    </header>
+
+    <p class="lead">
+      单局循环同时连接战斗、构筑、路线和轮回线索。玩家不断在“立即变强”与“追查真相”之间做选择。
+    </p>
+
+    <svg class="diagram" viewBox="0 0 760 250" aria-label="核心循环图">
+      <defs>
+        <marker id="arrow-a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#24717a"></path>
+        </marker>
+      </defs>
+      <rect x="12" y="96" width="108" height="62" rx="6" fill="#f7e8e4" stroke="#c44935" stroke-width="1.5"></rect>
+      <text x="66" y="121" text-anchor="middle" font-size="15" font-weight="700">鼠光归返</text>
+      <text x="66" y="141" text-anchor="middle" font-size="11" fill="#66717c">活借 + 永久解锁</text>
+
+      <rect x="164" y="96" width="108" height="62" rx="6" fill="#ffffff" stroke="#aebbc1"></rect>
+      <text x="218" y="121" text-anchor="middle" font-size="15" font-weight="700">选择路线</text>
+      <text x="218" y="141" text-anchor="middle" font-size="11" fill="#66717c">风险 / 收益判断</text>
+
+      <rect x="316" y="42" width="108" height="62" rx="6" fill="#e6f0f0" stroke="#24717a" stroke-width="1.5"></rect>
+      <text x="370" y="67" text-anchor="middle" font-size="15" font-weight="700">1v1 对决</text>
+      <text x="370" y="87" text-anchor="middle" font-size="11" fill="#66717c">攻防 / 武器切换</text>
+
+      <rect x="316" y="150" width="108" height="62" rx="6" fill="#ffffff" stroke="#aebbc1"></rect>
+      <text x="370" y="175" text-anchor="middle" font-size="15" font-weight="700">即时构筑</text>
+      <text x="370" y="195" text-anchor="middle" font-size="11" fill="#66717c">秘籍 / 装备 / 信物</text>
+
+      <rect x="468" y="96" width="108" height="62" rx="6" fill="#f5eedf" stroke="#bd8b2f" stroke-width="1.5"></rect>
+      <text x="522" y="121" text-anchor="middle" font-size="15" font-weight="700">Boss / 死亡</text>
+      <text x="522" y="141" text-anchor="middle" font-size="11" fill="#66717c">结算本局状态</text>
+
+      <rect x="620" y="96" width="126" height="62" rx="6" fill="#edf1f2" stroke="#24717a"></rect>
+      <text x="683" y="121" text-anchor="middle" font-size="15" font-weight="700" fill="#17212b">失名旧我</text>
+      <text x="683" y="141" text-anchor="middle" font-size="11" fill="#66717c">低概率可选追溯</text>
+
+      <line x1="120" y1="127" x2="158" y2="127" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-a)"></line>
+      <line x1="272" y1="127" x2="310" y2="80" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-a)"></line>
+      <line x1="424" y1="73" x2="462" y2="116" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-a)"></line>
+      <line x1="576" y1="127" x2="614" y2="127" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-a)"></line>
+      <line x1="683" y1="158" x2="683" y2="224" stroke="#24717a" stroke-width="2"></line>
+      <line x1="683" y1="224" x2="66" y2="224" stroke="#24717a" stroke-width="2"></line>
+      <line x1="66" y1="224" x2="66" y2="162" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-a)"></line>
+      <line x1="424" y1="181" x2="518" y2="181" stroke="#24717a" stroke-width="2"></line>
+      <line x1="522" y1="181" x2="522" y2="162" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-a)"></line>
+      <line x1="370" y1="150" x2="370" y2="108" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-a)"></line>
+    </svg>
+    <div class="caption">核心循环：鼠光归返 → 路线决策 → 对决 → 即时构筑 → 结算 → 可选证词追查。</div>
+
+    <div class="rule"></div>
+    <div class="grid-3">
+      <div class="panel soft">
+        <span class="mini-label">战斗决策</span>
+        <p>正面交换、拉开距离，还是切换武器创造克制？</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">构筑决策</span>
+        <p>新秘籍是否值得占用招式槽，应该替换谁？</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">路线决策</span>
+        <p>追逐成果、寻找商店，还是追查可能出现的失名旧我？</p>
+      </div>
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>05</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">05 / RUN STRUCTURE</div>
+        <div class="page-title">地图与单局节奏</div>
+      </div>
+      <div class="page-no">06</div>
+    </header>
+
+    <p class="lead">
+      一局固定经过 20 个节点，分为无雨乡、罡风隘、天河录库与玉京天阙四个区域，每区 5 个节点。罡风隘与天河录库可交换顺序。
+    </p>
+
+    <svg class="diagram" viewBox="0 0 760 270" aria-label="分支地图示意图">
+      <defs>
+        <marker id="arrow-b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#7d8b92"></path>
+        </marker>
+      </defs>
+      <g stroke="#9aa8ae" stroke-width="2" fill="none" marker-end="url(#arrow-b)">
+        <path d="M382 40 L250 98"></path>
+        <path d="M382 40 L512 98"></path>
+        <path d="M250 98 L194 165"></path>
+        <path d="M250 98 L310 165"></path>
+        <path d="M512 98 L450 165"></path>
+        <path d="M512 98 L588 165"></path>
+        <path d="M194 165 L278 232"></path>
+        <path d="M310 165 L278 232"></path>
+        <path d="M310 165 L482 232"></path>
+        <path d="M450 165 L482 232"></path>
+        <path d="M588 165 L482 232"></path>
+      </g>
+      <g>
+        <circle cx="382" cy="40" r="22" fill="#17212b"></circle>
+        <text x="382" y="45" text-anchor="middle" font-size="12" fill="#ffffff">起点</text>
+
+        <circle cx="250" cy="98" r="24" fill="#ffffff" stroke="#aebbc1"></circle>
+        <text x="250" y="102" text-anchor="middle" font-size="11">对决</text>
+        <circle cx="512" cy="98" r="24" fill="#f5eedf" stroke="#bd8b2f"></circle>
+        <text x="512" y="102" text-anchor="middle" font-size="11">奇遇</text>
+
+        <circle cx="194" cy="165" r="24" fill="#ffffff" stroke="#aebbc1"></circle>
+        <text x="194" y="169" text-anchor="middle" font-size="11">商店</text>
+        <circle cx="310" cy="165" r="24" fill="#f7e8e4" stroke="#c44935"></circle>
+        <text x="310" y="169" text-anchor="middle" font-size="11">旧我</text>
+        <circle cx="450" cy="165" r="24" fill="#e6f0f0" stroke="#24717a"></circle>
+        <text x="450" y="169" text-anchor="middle" font-size="11">精英</text>
+        <circle cx="588" cy="165" r="24" fill="#ffffff" stroke="#aebbc1"></circle>
+        <text x="588" y="169" text-anchor="middle" font-size="11">对决</text>
+
+        <circle cx="482" cy="232" r="28" fill="#17212b"></circle>
+        <text x="482" y="237" text-anchor="middle" font-size="12" fill="#ffffff">Boss</text>
+      </g>
+    </svg>
+    <div class="caption">路线应提供明确风险差异。失名旧我不会必然出现，但玩家可通过特定路线提高追查概率。</div>
+
+    <div class="rule"></div>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th style="width:23%">节点类型</th>
+          <th style="width:37%">主要作用</th>
+          <th>玩家决策</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">普通对决</td><td>进行单血条 1v1 战斗</td><td>是否冒险换取成长</td></tr>
+        <tr><td class="accent">精英 / 旧我</td><td>高强度敌人或可选证词追查</td><td>构筑是否足以应对额外风险</td></tr>
+        <tr><td class="accent">奇遇事件</td><td>提供风险交换或规则变化</td><td>是否牺牲当前资源换取未来能力</td></tr>
+        <tr><td class="accent">商店</td><td>购买武器、秘籍或恢复资源</td><td>是否为当前流派投入资源</td></tr>
+        <tr><td class="accent">Boss</td><td>多阶段高强度战斗，阶段数按敌人配置</td><td>是否已经具备稳定应对手段</td></tr>
+      </tbody>
+    </table>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>06</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">06 / CHARACTER SYSTEM</div>
+        <div class="page-title">生肖角色系统</div>
+      </div>
+      <div class="page-no">07</div>
+    </header>
+
+    <p class="lead">
+      主线固定使用鼠光。其他生肖共用同一套动作框架，在轮回试炼中作为额外角色开放。差异集中在数值、特殊能力与招式改写，既能保证敌人和关卡可复用，也能真正改变解法。
+    </p>
+
+    <div class="grid-2">
+      <div class="panel red">
+        <span class="mini-label">REPRESENTATIVE / RAT</span>
+        <h3>鼠：高速近身与绕后</h3>
+        <p><strong>特殊能力：打洞</strong></p>
+        <ul>
+          <li>只能进入预先标记的软土、墙脚或地洞。</li>
+          <li>消耗专用资源，不能无限停留在地下。</li>
+          <li>出口可识别，敌人能够预判或封锁。</li>
+        </ul>
+        <p><strong>关卡影响：</strong>把侧向地洞变成绕过正面防线的高风险路线。</p>
+      </div>
+      <div class="panel teal">
+        <span class="mini-label">REPRESENTATIVE / DRAGON</span>
+        <h3>龙：空中压制与机动</h3>
+        <p><strong>特殊能力：飞行</strong></p>
+        <ul>
+          <li>持续飞行消耗气力，耗尽后只能滑翔。</li>
+          <li>竞技场可通过天花板、飞镖与强风限制空域。</li>
+          <li>空中仍需承受清晰的反空攻击威胁。</li>
+        </ul>
+        <p><strong>关卡影响：</strong>取得高度优势，但必须管理气力与落点。</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+    <h3>角色差异维度</h3>
+    <div class="grid-3">
+      <div class="panel soft"><span class="mini-label">机动</span><p>移动速度、跳跃高度、冲刺距离与空中控制。</p></div>
+      <div class="panel soft"><span class="mini-label">交战</span><p>攻击距离、连招节奏、硬直能力与防御效率。</p></div>
+      <div class="panel soft"><span class="mini-label">规则</span><p>特殊资源、核心技能，以及由此产生的专属关卡路线。</p></div>
+    </div>
+
+    <div class="callout">
+      平衡原则：数值差异决定角色倾向，特殊能力决定解关方式。强力移动能力必须附带资源、空间或时间成本。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>07</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">07 / COMBAT & BUILD</div>
+        <div class="page-title">战斗与构筑系统</div>
+      </div>
+      <div class="page-no">08</div>
+    </header>
+
+    <p class="lead">
+      战斗以横版竞技场中的攻防交换为核心。普通敌人使用单条生命；Boss 使用多阶段结构，逐层测试玩家对操作、站位与构筑的理解。
+    </p>
+
+    <div class="flow">
+      <div class="flow-node"><strong>观察</strong><span>辨认武器、站位和起手动作</span></div>
+      <div class="flow-node"><strong>试探</strong><span>确认攻击距离与防守习惯</span></div>
+      <div class="flow-node"><strong>交换</strong><span>使用连招、防御、闪避与技能</span></div>
+      <div class="flow-node"><strong>调整</strong><span>切换武器或启用新获得的秘籍</span></div>
+      <div class="flow-node"><strong>结算</strong><span>选择奖励并返回地图路线</span></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <span class="mini-label">WEAPON</span>
+        <h3>武器：决定基础连招</h3>
+        <ul>
+          <li>玩家同时携带 2 把武器。</li>
+          <li>每把武器拥有独立连段与攻击距离。</li>
+          <li>切换存在冷却，受击硬直中不能切换。</li>
+          <li>武器形成快攻、破防、牵制等节奏差异。</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <span class="mini-label">MANUAL</span>
+        <h3>秘籍：即刻改写招式</h3>
+        <ul>
+          <li>拾取后立即生效，无需回到局外配置。</li>
+          <li>最多保留 3 个主动招式。</li>
+          <li>满槽时选择替换已有招式或放弃新招式。</li>
+          <li>部分秘籍修改普攻、跳跃攻击或武器切换。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+    <h3>四类物品的职责</h3>
+    <table class="matrix">
+      <thead>
+        <tr><th>类别</th><th>作用</th><th>是否跨局保留</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">武器</td><td>决定普攻、连招、攻击距离和节奏</td><td>不保留，只解锁可出现的种类</td></tr>
+        <tr><td class="accent">武功秘籍</td><td>提供主动招式或改写连招</td><td>不保留，只解锁可出现的种类</td></tr>
+        <tr><td class="accent">防具</td><td>改变防御、硬直和生存规则</td><td>不保留</td></tr>
+        <tr><td class="accent">信物</td><td>提供特殊规则和组合条件</td><td>不保留</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      构筑目标不是叠加最高伤害，而是形成能同时处理不同距离、不同敌人节奏和不同场地问题的组合。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>08</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">08 / HOST &amp; OLD SELF</div>
+        <div class="page-title">活体寄身与失名旧我</div>
+      </div>
+      <div class="page-no">09</div>
+    </header>
+
+    <p class="lead">
+      第一次回归使用鼠光自己的身体。后续每轮由一名活着的承愿者提供身体。他们意识清醒却无法控制，阎王则对鼠光谎称那只是已经死亡的自愿身体。
+    </p>
+
+    <svg class="diagram" viewBox="0 0 760 170" aria-label="活体寄身与失名旧我流程">
+      <defs>
+        <marker id="arrow-c" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#24717a"></path>
+        </marker>
+      </defs>
+      <g>
+        <rect x="10" y="56" width="126" height="58" rx="6" fill="#f7e8e4" stroke="#c44935"></rect>
+        <text x="73" y="81" text-anchor="middle" font-size="14" font-weight="700">死亡 / 通关</text>
+        <text x="73" y="100" text-anchor="middle" font-size="10" fill="#66717c">灵魂被秘密带回</text>
+
+        <rect x="176" y="56" width="142" height="58" rx="6" fill="#ffffff" stroke="#aebbc1"></rect>
+        <text x="247" y="81" text-anchor="middle" font-size="14" font-weight="700">写入战斗记录</text>
+        <text x="247" y="100" text-anchor="middle" font-size="10" fill="#66717c">武器 + 行为习惯</text>
+
+        <rect x="358" y="56" width="142" height="58" rx="6" fill="#e6f0f0" stroke="#24717a"></rect>
+        <text x="429" y="81" text-anchor="middle" font-size="14" font-weight="700">承愿者身体</text>
+        <text x="429" y="100" text-anchor="middle" font-size="10" fill="#66717c">清醒意识被压制</text>
+
+        <rect x="540" y="56" width="112" height="58" rx="6" fill="#f5eedf" stroke="#bd8b2f"></rect>
+        <text x="596" y="81" text-anchor="middle" font-size="14" font-weight="700">可选精英池</text>
+        <text x="596" y="100" text-anchor="middle" font-size="10" fill="#66717c">不保证出现</text>
+
+        <rect x="692" y="56" width="58" height="58" rx="6" fill="#edf1f2" stroke="#24717a"></rect>
+        <text x="721" y="81" text-anchor="middle" font-size="13" fill="#17212b">释放</text>
+        <text x="721" y="100" text-anchor="middle" font-size="10" fill="#66717c">宿主</text>
+
+        <line x1="136" y1="85" x2="170" y2="85" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-c)"></line>
+        <line x1="318" y1="85" x2="352" y2="85" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-c)"></line>
+        <line x1="500" y1="85" x2="534" y2="85" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-c)"></line>
+        <line x1="652" y1="85" x2="686" y2="85" stroke="#24717a" stroke-width="2" marker-end="url(#arrow-c)"></line>
+      </g>
+    </svg>
+
+    <div class="rule"></div>
+    <div class="grid-3">
+      <div class="panel soft">
+        <span class="mini-label">识别</span>
+        <p>旧我用鼠光的动作暴露模仿痕迹，但身体和被困意识属于承愿者。</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">风险</span>
+        <p>失名旧我进入可选精英池，概率受区域、路线和证词数量影响。</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">公平</span>
+        <p>旧我只学习三种行为习惯，不继承无预警秒杀能力。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      “旧我”是清醒承愿者、被压抑的意识与鼠光战斗记录共同形成的困魂实体。击败它是释放宿主并获得隐藏结局证词的机会，不是普通流程必须完成的固定任务。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>09</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">09 / LEVEL DESIGN FRAMEWORK</div>
+        <div class="page-title">关卡设计方法</div>
+      </div>
+      <div class="page-no">10</div>
+    </header>
+
+    <p class="lead">
+      关卡不是从入口跑到出口，而是让同一套 1v1 规则在不同空间条件下产生变化。设计的核心问题是：地形怎样改变玩家的站位、距离与能力价值？
+    </p>
+
+    <div class="grid-3">
+      <div class="panel red">
+        <span class="mini-label">交战空间</span>
+        <h3>距离</h3>
+        <p>主战区保持开阔，避免平台过多切断近战交锋，同时让远程与突进产生明确强弱位置。</p>
+      </div>
+      <div class="panel gold">
+        <span class="mini-label">垂直空间</span>
+        <h3>高度</h3>
+        <p>平台给予压制角度，也增加落地与追击成本。飞行能力不能无条件取消这项代价。</p>
+      </div>
+      <div class="panel teal">
+        <span class="mini-label">角色路线</span>
+        <h3>差异</h3>
+        <p>地洞与空域提供专属解法，但必须有固定出口、反空攻击或资源成本来维持对抗。</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+    <h3>系统如何落到关卡</h3>
+    <table class="matrix">
+      <thead>
+        <tr><th style="width:25%">系统</th><th>具体关卡表达</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">生肖数值</td><td>速度、跳跃与攻击距离改变安全区、追击路线和平台价值。</td></tr>
+        <tr><td class="accent">特殊技能</td><td>鼠的地洞与龙的飞行生成专属路线，并引入预判、气力和反空约束。</td></tr>
+        <tr><td class="accent">武器切换</td><td>不同高度与敌人阶段需要不同攻击距离和连招节奏。</td></tr>
+        <tr><td class="accent">武功秘籍</td><td>特定组合可以缩短战斗，但要求玩家在路线中完成构筑。</td></tr>
+        <tr><td class="accent">失名旧我</td><td>可选精英沿用原场地规则，并作为宿主释放与隐藏证词来源。</td></tr>
+        <tr><td class="accent">环境机关</td><td>机关对双方生效，周期改变站位、恢复窗口和进攻时机。</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      关卡验收标准：角色能力必须带来不同解法，但不能让玩家绕过对决本身；玩家失败后应能说出下一次需要改变的行为。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>10</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">10 / LEVEL CASE</div>
+        <div class="page-title">普通关卡案例：悬索擂台</div>
+      </div>
+      <div class="page-no">11</div>
+    </header>
+
+    <p class="lead">
+      悬索擂台用于教学“角色能力与路线选择”的关系。它是一屏横版竞技场，敌人使用单条生命，重点是距离管理和专属路线取舍。
+    </p>
+
+    <div class="arena">
+      <div class="platform" style="left:13mm;top:16mm;width:35mm"></div>
+      <div class="platform" style="left:69mm;top:16mm;width:35mm"></div>
+      <div class="platform" style="left:125mm;top:16mm;width:35mm"></div>
+      <div class="flight"></div>
+      <div class="tunnel"></div>
+      <div class="ground"></div>
+      <div class="fighter one">鼠</div>
+      <div class="fighter two">敌</div>
+      <div class="marker tunnel">鼠类地洞：出口固定且可预判</div>
+      <div class="marker flight">龙类空域：反空与气力限制</div>
+    </div>
+    <div class="caption">悬索擂台：地面负责 1v1 正面交锋，上层平台改变压制角度，专属路线提供高收益入口。</div>
+
+    <div class="rule"></div>
+    <div class="grid-2">
+      <div class="panel">
+        <span class="mini-label">战斗过程</span>
+        <ol>
+          <li>地面开局，双方确认攻击距离与防御方式。</li>
+          <li>敌人水平突进，迫使玩家改变站位或跳上平台。</li>
+          <li>鼠可钻洞绕后，但出口会被预判或封锁。</li>
+          <li>龙可取得空中优势，但需管理气力与落地位置。</li>
+          <li>胜利后奖励位于风险侧，玩家决定是否立即拾取。</li>
+        </ol>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">验证问题</span>
+        <ul>
+          <li>鼠和龙是否都能利用场地，却不能跳过整场战斗？</li>
+          <li>其他角色是否仍能用基础平台和武器切换处理同类问题？</li>
+          <li>敌人是否能对不同高度和绕后路线做出可理解回应？</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>11</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">11 / BOSS CASE</div>
+        <div class="page-title">Boss 案例：削名判官</div>
+      </div>
+      <div class="page-no">12</div>
+    </header>
+
+    <p class="lead">
+      削名判官驻守天河录库，负责抹除失踪者、承愿者与反抗者的姓名。他测试玩家能否在部分构筑被封锁时调整打法。
+    </p>
+
+    <div class="phase-strip">
+      <article class="phase">
+        <span class="phase-no">PHASE 01 / 录名</span>
+        <h3>观察构筑</h3>
+        <p>判官记录玩家常用的武器与武功，并在卷宗中写下能力名称。</p>
+        <p><strong>玩家任务：</strong>交替使用不同武器和招式，避免单一构筑被完全锁定。</p>
+        <p><strong>失败特征：</strong>只依赖同一套连招与武器。</p>
+      </article>
+      <article class="phase">
+        <span class="phase-no">PHASE 02 / 削名</span>
+        <h3>临时封锁</h3>
+        <p>最多封锁一个武器槽或一个主动招式，场地出现对应封条。</p>
+        <p><strong>玩家任务：</strong>判断继续进攻还是优先破除封锁，恢复完整构筑。</p>
+        <p><strong>失败特征：</strong>忽略封条，继续依赖已被封锁的能力。</p>
+      </article>
+      <article class="phase">
+        <span class="phase-no">PHASE 03 / 判词</span>
+        <h3>规则成真</h3>
+        <p>判官写下最多两条场地规则，例如禁止跳跃、封锁武器或周期落判。</p>
+        <p><strong>玩家任务：</strong>击破对应封条推翻判词，同时保持站位与资源。</p>
+        <p><strong>失败特征：</strong>同时处理两条规则时失去节奏。</p>
+      </article>
+    </div>
+
+    <div class="rule"></div>
+    <div class="grid-2">
+      <div class="panel red">
+        <span class="mini-label">判词规则</span>
+        <p>最多同时生效两条，第三条替换最早一条。每条判词都有明确文字、场地标记和至少一种破除方式，不能封锁唯一生存手段。</p>
+      </div>
+      <div class="panel teal">
+        <span class="mini-label">失败反馈</span>
+        <p>玩家应能指出自己忽略的封条或过度依赖的招式，而不是感觉能力被随机禁用。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      Boss 设计目标：把“名字被抹除”转化为可读的构筑限制，并通过击破封条让玩家夺回主动权。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>12</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">12 / DESIGN TRADE-OFFS</div>
+        <div class="page-title">关键取舍与风险控制</div>
+      </div>
+      <div class="page-no">13</div>
+    </header>
+
+    <p class="lead">
+      作品集不只展示“想做什么”，还要说明“为什么这样做”和“如何避免范围失控”。以下取舍用于保证系统、关卡与制作复杂度保持可控。
+    </p>
+
+    <div class="grid-2">
+      <div class="panel red">
+        <span class="mini-label">WHY BRANCHING MAP</span>
+        <h3>为什么采用分支地图</h3>
+        <p>让玩家在战斗前做风险选择，并连接战斗、奖励和隐藏证词追查，而不只是改变关卡顺序。</p>
+      </div>
+      <div class="panel gold">
+        <span class="mini-label">WHY MANUALS ARE INSTANT</span>
+        <h3>为什么秘籍即时生效</h3>
+        <p>强化临场调整和路线价值。每次拾取都可能改变后续决策，而不是局外固定配装。</p>
+      </div>
+      <div class="panel teal">
+        <span class="mini-label">WHY NO PERMANENT STATS</span>
+        <h3>为什么不保留永久成长</h3>
+        <p>避免死亡循环变成刷属性，让玩家成长主要来自知识、操作与组合理解。</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">WHY LIMIT MOBILITY</span>
+        <h3>为什么限制打洞与飞行</h3>
+        <p>资源消耗、固定出口、反空区和场地结构可以保留角色幻想，同时维持 1v1 的核心地位。</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+    <table class="matrix">
+      <thead>
+        <tr><th style="width:25%">风险</th><th>控制方式</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">十二生肖内容过大</td><td>共用动作框架；差异集中在数值、一个特殊能力和少量招式改写；关卡只增加角色专属路线。</td></tr>
+        <tr><td class="accent">飞行破坏关卡</td><td>气力限制、反空攻击、空域约束，并让地面路线拥有不同收益。</td></tr>
+        <tr><td class="accent">格斗式 AI 复杂</td><td>敌人使用少量行为模块；“旧我”复用已有模块，不模拟完整玩家操作。</td></tr>
+        <tr><td class="accent">活借的道德压力</td><td>前期保持暧昧；旧我设为可选；每次释放宿主都有明确反馈；隐藏结局统一解救未死者。</td></tr>
+        <tr><td class="accent">构筑难以理解</td><td>围绕少量明确标签建立效果；界面只显示关键状态与主动招式。</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      范围控制原则：先完成系统之间的闭环，再增加角色和内容。十二生肖的差异必须能落回同一套战斗与关卡语法。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>13</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">13 / FULL VISION</div>
+        <div class="page-title">十二生肖概念矩阵</div>
+      </div>
+      <div class="page-no">14</div>
+    </header>
+
+    <p class="lead">
+      十二生肖在同一场登天战中从不同方向阵亡。主线固定使用鼠光；其他角色通过剧情、旧我、小神仙事件和轮回试炼共同构成群像。
+    </p>
+
+    <table class="matrix">
+      <thead>
+        <tr><th>生肖</th><th>姓名</th><th>定位与职责</th><th>能力或关卡侧写</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">鼠</td><td>鼠光</td><td>主线主角，冷峻寡言，为百姓持续登天</td><td>高速近身、地洞绕后与行为记录焦点</td></tr>
+        <tr><td class="accent">牛</td><td>牛贵</td><td>支线 / 试炼，代表农户与普通百姓</td><td>重装近战、蓄力冲撞与破墙</td></tr>
+        <tr><td class="accent">虎</td><td>虎大</td><td>支线 / 试炼，代表反抗军内部理念冲突</td><td>强攻、突进与反击</td></tr>
+        <tr><td class="accent">兔</td><td>兔昭</td><td>唯一情感短章角色，鼠光的挚友</td><td>多段跳跃、假动作与乐观信念</td></tr>
+        <tr><td class="accent">龙</td><td>龙远</td><td>试炼 / 剧情 NPC，负责高空侦察</td><td>气力飞行、空域控制与反空限制</td></tr>
+        <tr><td class="accent">蛇</td><td>蛇牙</td><td>支线 / 试炼，最早怀疑阎王的人</td><td>中距控制、低姿滑行与束缚</td></tr>
+        <tr><td class="accent">马</td><td>马顺</td><td>试炼 / 剧情 NPC，负责运送伤员与百姓</td><td>长距冲刺、撤离路线与连段</td></tr>
+        <tr><td class="accent">羊</td><td>羊宁</td><td>试炼 / 剧情 NPC，管理庇护所与药物</td><td>防守反击、治疗与空间稳定</td></tr>
+        <tr><td class="accent">猴</td><td>猴影</td><td>支线 / 试炼，独行侦察者与复制悲剧</td><td>模仿招式、空中连段与记录伏笔</td></tr>
+        <tr><td class="accent">鸡</td><td>鸡晓</td><td>试炼 / 剧情 NPC，负责预警与号令</td><td>短距飞行、声波标记与先手打断</td></tr>
+        <tr><td class="accent">狗</td><td>狗安</td><td>试炼 / 剧情 NPC，追查失踪者与伪造记录</td><td>追踪、反制与投掷物利用</td></tr>
+        <tr><td class="accent">猪</td><td>猪满</td><td>试炼 / 剧情 NPC，管理粮食与装备补给</td><td>生存、资源交换与高风险机关</td></tr>
+      </tbody>
+    </table>
+
+    <div class="closing-box">
+      <h3>设计总结</h3>
+      <p>
+        《十二神相录》以生肖能力改变关卡规则，以武器和秘籍制造局内变化，以阎王记录的“旧我”连接每一次轮回。玩家最后面对的不只是天庭，也包括被复制和利用的自己。
+      </p>
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 概念设计案</span>
+      <span>14</span>
+    </div>
+  </section>
+</body>
+</html>
