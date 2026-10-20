@@ -110,9 +110,9 @@ Windows 构建：
 正式 Godot 工程已安装 `Godot MCP Native 1.0.8`：
 
 - 插件目录：`E:\twelfe\addons\godot_mcp`
-- 原配置地址：`http://localhost:9080/mcp`
+- MCP 地址：`http://localhost:19081/mcp`
 - Codex 服务名：`godot-mcp`
-- 注意：本机 `9080` 被 `NahimicService` 占用，当前 MCP 连接不可用；需要把 Godot MCP 和 Codex 配置迁移到空闲端口（建议 `19081`）后再使用。
+- 状态：已通过 HTTP MCP 初始化验证，服务标识为 `godot-native-mcp 2.0.0`；需要新开 Codex 对话后加载工具。
 
 ---
 

@@ -40,9 +40,9 @@
 
 - 插件：`Godot MCP Native 1.0.8`
 - 插件目录：`E:\twelfe\addons\godot_mcp`
-- 目标 MCP 地址：原配置为 `http://localhost:9080/mcp`
+- MCP 地址：`http://localhost:19081/mcp`
 - Codex 配置项：`godot-mcp`
-- 状态：插件已安装，但本机 `9080` 被 `NahimicService` 占用。当前 Codex MCP 连接不可用，必须先把 Godot MCP 和 Codex 配置改到空闲端口（建议 `19081`），再重载插件并新开对话。
+- 状态：插件和 Codex 配置已迁移到空闲端口 `19081`；HTTP MCP 初始化请求验证成功，服务返回 `godot-native-mcp 2.0.0`。当前正在运行一个隐藏的 headless Godot MCP 服务，新开 Codex 对话后加载工具。
 
 **当前唯一下一步**
 
@@ -453,7 +453,7 @@ screen_shake_strength
 | --- | --- | --- |
 | 正式工程确认 | 已完成 | `E:\twelfe\project.godot` |
 | Godot 4.7.2 确认 | 已完成 | CLI 输出版本 |
-| Godot MCP 安装 | 部分完成 | 插件与 Codex 配置存在；9080 被占用，连接待迁移到空闲端口 |
+| Godot MCP 安装 | 已完成 | 插件与 Codex 配置已迁移到 `19081`，MCP initialize 验证通过 |
 | 技术设计与 Cold Start | 已完成 | 本文件 |
 | 设定总览与演示材料同步 | 已完成 | Markdown、HTML、PDF |
 | 规格审阅 | 已完成 | 用户于 2026-10-15 批准 |
