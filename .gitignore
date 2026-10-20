@@ -30,3 +30,11 @@ desktop.ini
 node_modules/
 dist/
 *.log
+
+# Godot 工程的外部 Git 元数据与 MCP 源码缓存
+.git-twelfe/
+.git-twelfe-state/
+.godot-mcp-native/
+
+# 编辑器备份
+*.bak-*

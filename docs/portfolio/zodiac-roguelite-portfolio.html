@@ -708,9 +708,9 @@
     </p>
     <p class="cover-tagline">天书无名，人间有相</p>
     <div class="cover-meta">
-      <div><span>项目阶段</span><strong>概念设计案</strong></div>
+      <div><span>项目阶段</span><strong>可玩 Demo + 设计案</strong></div>
       <div><span>核心类型</span><strong>2D 横版 1v1 动作 Roguelite</strong></div>
-      <div><span>文档目的</span><strong>展示设计推导、系统联动与关卡案例</strong></div>
+      <div><span>文档目的</span><strong>展示设计推导、系统联动、关卡案例与可玩范围</strong></div>
     </div>
     <div class="cover-mark">斗</div>
     <div class="cover-foot">
@@ -1456,9 +1456,9 @@
         <p>避免死亡循环变成刷属性，让玩家成长主要来自知识、操作与组合理解。</p>
       </div>
       <div class="panel soft">
-        <span class="mini-label">WHY LIMIT MOBILITY</span>
-        <h3>为什么限制打洞与飞行</h3>
-        <p>资源消耗、固定出口、反空区和场地结构可以保留角色幻想，同时维持 1v1 的核心地位。</p>
+        <span class="mini-label">WHY BURROW COSTS QI</span>
+        <h3>为什么潜地持续消耗气</h3>
+        <p>主地面可自由潜地，但地下移动持续消耗气，并留下暴露位置的地面裂纹；敌人可用踏地、地刺和范围攻击反制。</p>
       </div>
     </div>
 
@@ -1529,6 +1529,249 @@
     <div class="page-foot">
       <span><strong>十二神相录</strong> / 概念设计案</span>
       <span>14</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">14 / PLAYABLE DEMO</div>
+        <div class="page-title">Demo 纵向切片</div>
+      </div>
+      <div class="page-no">15</div>
+    </header>
+
+    <p class="lead">
+      首个可展示版本不验证完整世界观，而是用 10–15 分钟证明核心战斗、旧我复制和香火抉择能够共同成立。
+    </p>
+
+    <div class="grid-4">
+      <div class="metric"><strong>10–15</strong><span>分钟 / 完整体验</span></div>
+      <div class="metric"><strong>6</strong><span>节点 / 固定流程</span></div>
+      <div class="metric"><strong>2</strong><span>武器 / 短刃与长枪</span></div>
+      <div class="metric"><strong>1</strong><span>旧我战 + 1 场 Boss</span></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <table class="matrix">
+      <thead>
+        <tr><th style="width:18%">节点</th><th style="width:30%">内容</th><th>验证目标</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">01 序章契约</td><td>战死、黄泉与还魂契约</td><td>交代鼠光为何继续登天</td></tr>
+        <tr><td class="accent">02 天兵教学</td><td>移动、跳跃、攻击、防御、闪避</td><td>建立基础距离与攻防规则</td></tr>
+        <tr><td class="accent">03 香火抉择</td><td>归还百姓或投入祝安商店</td><td>验证战斗收益与叙事线索的取舍</td></tr>
+        <tr><td class="accent">04 断雨校尉</td><td>精英战与场地干旱</td><td>验证换武、架势和破防</td></tr>
+        <tr><td class="accent">05 旧我</td><td>复制上一战的距离、连招和闪避</td><td>验证行为记录是否可识别、可破解</td></tr>
+        <tr><td class="accent">06 夺愿神</td><td>夺势护盾、香炉资源与反潜地</td><td>收束资源循环并揭示许安身份</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid-2">
+      <div class="panel teal">
+        <span class="mini-label">IN SCOPE</span>
+        <h3>鼠光 / 无雨乡 / 两把武器</h3>
+        <p>天兵、镇守、法吏三种人形敌人，以及一次旧我战和夺愿神 Boss。</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">OUT OF SCOPE</span>
+        <h3>不做十二生肖全角色</h3>
+        <p>不同时制作四大区域、20 节点、完整物品池、判词 Boss 或最终双终局。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      Demo 成功标准：玩家能理解气与势的区别，能用两把武器解决不同距离问题，能完成一次格挡反击与浮空追击，并能把旧我的行为与上一战联系起来。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / Demo 纵向切片</span>
+      <span>15</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">15 / COMBAT PROTOTYPE</div>
+        <div class="page-title">战斗原型规格</div>
+      </div>
+      <div class="page-no">16</div>
+    </header>
+
+    <p class="lead">
+      战斗原型围绕四资源、可读受击状态和两段共用起手后的连招分支展开。所有帧数和消耗先进入 Combat Lab 实测，不直接写死为最终数值。
+    </p>
+
+    <div class="grid-2">
+      <div class="panel red">
+        <span class="mini-label">DEFENSE RESOURCE</span>
+        <h3>气负责生存</h3>
+        <p>防御、闪避和潜地消耗气；精准格挡恢复气并制造反击机会。受击时气达到阈值，可手动发动一次绝境精准格挡。</p>
+      </div>
+      <div class="panel gold">
+        <span class="mini-label">OFFENSE RESOURCE</span>
+        <h3>势负责进攻</h3>
+        <p>所有攻击消耗势，命中与精准格挡继续积累势；非攻击状态每秒缓慢恢复 2 点，攻击期间暂停，形成持续攻防压力。</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <h3>受击状态</h3>
+    <table class="matrix">
+      <thead>
+        <tr><th style="width:18%">状态</th><th style="width:32%">来源</th><th>后续处理</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">僵直</td><td>普通攻击、平推攻击</td><td>短暂无法行动，硬直结束后恢复</td></tr>
+        <tr><td class="accent">击飞</td><td>上挑或击飞类招式</td><td>支持有限追击，落地后进入倒地</td></tr>
+        <tr><td class="accent">倒地</td><td>砸地击、击飞落地</td><td>可接地面重击，随后直接起身</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid-3">
+      <div class="panel soft">
+        <span class="mini-label">COMBO GRAMMAR</span>
+        <p>轻1 → 轻2 后，可按轻击、前+轻击、上+轻击、重击或换武分支。</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">AIR COMBO</span>
+        <p>空中轻击沿用地面逻辑；空中重击为砸地击，落地后使目标倒地。</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">JUGGLE BUDGET</span>
+        <p>普通敌人 3 次、精英 2 次、Boss 1 次浮空追击；重型敌人可以不可击飞。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      鼠光特殊能力：主地面可自由潜地，地下持续耗气并暴露近似位置。钻出没有惩罚性硬直，按攻击可立即衔接破土上挑。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 战斗原型规格</span>
+      <span>16</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">16 / GODOT IMPLEMENTATION</div>
+        <div class="page-title">Godot 实现与进度</div>
+      </div>
+      <div class="page-no">17</div>
+    </header>
+
+    <p class="lead">
+      工程使用 Godot 4.7.2 和 GDScript，采用数据驱动的组件化原型。先完成 Combat Lab，再接入六节点流程、旧我和 Boss。
+    </p>
+
+    <div class="grid-4">
+      <div class="metric"><strong>Godot</strong><span>4.7.2 / GDScript</span></div>
+      <div class="metric"><strong>1920×1080</strong><span>canvas_items 拉伸</span></div>
+      <div class="metric"><strong>4</strong><span>生命 / 架势 / 气 / 势</span></div>
+      <div class="metric"><strong>32</strong><span>自动测试脚本</span></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <table class="matrix">
+      <thead>
+        <tr><th style="width:30%">阶段</th><th style="width:20%">状态</th><th>验收证据</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">Godot 工程</td><td>已完成</td><td>Godot 4.7.2 工程可启动，主场景进入六节点 Demo</td></tr>
+        <tr><td class="accent">Combat Lab</td><td>已完成</td><td>玩家、木桩、三种敌人、双武器与完整四资源</td></tr>
+        <tr><td class="accent">旧我记录</td><td>已完成</td><td>距离、连招、闪避方向记录与复制 AI</td></tr>
+        <tr><td class="accent">夺愿神 Boss</td><td>已完成</td><td>三阶段、夺势护盾、香炉和反潜地</td></tr>
+        <tr><td class="accent">六节点与导出</td><td>已完成</td><td>节点选择、胜利动画、Windows 构建</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid-2">
+      <div class="panel teal">
+        <span class="mini-label">ARCHITECTURE</span>
+        <h3>组件化而非单体脚本</h3>
+        <p>生命、架势、气、势、攻击、受击、记录和 AI 分拆，复用于玩家、敌人、旧我与 Boss。</p>
+      </div>
+      <div class="panel soft">
+        <span class="mini-label">WORKING AGREEMENT</span>
+        <h3>先验证手柄，再增加内容</h3>
+        <p>Combat Lab 的手感、通关率和 60 FPS 达标后，才进入角色、剧情和美术扩张。</p>
+      </div>
+    </div>
+
+    <div class="closing-box">
+      <h3>当前结论</h3>
+      <p>《十二神相录》的完整愿景保留，但首个作品集版本只做鼠光在无雨乡的一段纵向切片。先把距离、格挡、连招、潜地和旧我做成可玩的闭环，再证明世界观能够被玩家亲手体验。</p>
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / Godot 实现与进度</span>
+      <span>17</span>
+    </div>
+  </section>
+
+  <section class="page">
+    <header class="page-head">
+      <div>
+        <div class="section-label">17 / PLAYABLE BUILD</div>
+        <div class="page-title">当前可玩版本与验证</div>
+      </div>
+      <div class="page-no">18</div>
+    </header>
+
+    <p class="lead">
+      当前版本已从系统原型推进为可完整走通的 Godot 纵向切片。重点不是内容量，而是用实际构建证明距离、格挡、连招、潜地、记录和流程能够共同工作。
+    </p>
+
+    <div class="grid-4">
+      <div class="metric"><strong>6</strong><span>可走通节点</span></div>
+      <div class="metric"><strong>3</strong><span>人形敌人原型</span></div>
+      <div class="metric"><strong>3</strong><span>夺愿神阶段</span></div>
+      <div class="metric"><strong>32</strong><span>自动测试脚本</span></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <h3>已验证系统</h3>
+    <table class="matrix">
+      <thead>
+        <tr><th style="width:27%">系统</th><th>当前结果</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="accent">战斗资源</td><td>生命、架势、气、势独立结算；攻击耗势，防御/闪避/潜地耗气。</td></tr>
+        <tr><td class="accent">连招与换武</td><td>两段共用起手，前突、上挑、重击和换武分支均可执行。</td></tr>
+        <tr><td class="accent">防御</td><td>普通格挡、精准格挡、近距离武器反击、受击绝境格挡。</td></tr>
+        <tr><td class="accent">鼠光能力</td><td>自由潜地、持续耗气、地面裂纹、反潜地、破土接轻击。</td></tr>
+        <tr><td class="accent">敌人反馈</td><td>格挡气、红色不可格挡、投射物、水平击退、僵直、击飞和倒地。</td></tr>
+        <tr><td class="accent">旧我</td><td>只读取上一战三类行为，按记录距离和连招顺序复现。</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid-2">
+      <div class="panel teal">
+        <span class="mini-label">FLOW EVIDENCE</span>
+        <h3>战斗结束后先选择</h3>
+        <p>胜利动画结束后进入独立节点地图；香火归还、商店投入、旧我和 Boss 节点都由玩家确认后才生成。</p>
+      </div>
+      <div class="panel gold">
+        <span class="mini-label">BUILD EVIDENCE</span>
+        <h3>Windows 构建可启动</h3>
+        <p>`TwelveZodiacDemo.exe` 已通过无界面启动验证；GDScript 脚本、资源与输入映射均能随构建加载。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      下一步范围：基础音效、进一步统一的皮影/纸张视觉、30–60 秒实机演示和作品集截图补充。暂不扩展其他生肖与完整四大区域。
+    </div>
+
+    <div class="page-foot">
+      <span><strong>十二神相录</strong> / 当前可玩版本</span>
+      <span>18</span>
     </div>
   </section>
 </body>
