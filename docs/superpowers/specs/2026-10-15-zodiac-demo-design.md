@@ -16,13 +16,14 @@
 - DemoFlow 战斗结束后播放胜利提示，再进入独立节点选择场景 `node_map.tscn`；选择完成前不生成下一场敌人。
 - `flow_hud.tscn` 常驻显示玩家和当前敌人的生命、架势、气、势及状态名。
 - 攻击命中通过 `HitboxComponent` 触发 `AttackData.hitstop_frames` 命中停顿和 `screen_shake_strength` 镜头震动；格挡反馈较弱，精准格挡使用独立事件。
+- 地面攻击在有效帧结束后可以取消为闪避；敌人前摇通过剪影颜色区分普通、不可格挡和反潜地攻击。
 - 玩家普通攻击和武技均只消耗势，不再消耗气；气只用于防御、闪避和潜地。
 - 势除攻击命中获取外，默认以每秒 `2` 点缓慢自然恢复；进入攻击状态后停止自然回复，直到整套连招结束或攻击被打断。普通轻击消耗 `8`、终结技 `12–15`、重击/砸地/地面追击 `20`、破土攻击 `15`。
 - 敌人普通受击会根据 `AttackData.knockback` 产生水平击退，并根据 `hitstun_frames` 进入僵直。
 - Git：可从 `E:\twelfe` 直接运行 Git 命令；元数据位于
   `E:\game plant\.git-twelfe-state\.git`。
 - Windows 构建：`E:\twelfe\build\windows\TwelveZodiacDemo.exe`，2026-10-20 已通过 headless 启动验证。
-- 自动测试：`E:\twelfe\tests` 下共 32 个 GDScript 测试脚本，覆盖战斗、潜地、敌人、旧我、Boss、流程与 UI 数据。
+- 自动测试：`E:\twelfe\tests` 下共 35 个 GDScript 测试脚本，覆盖战斗、取消窗口、出招预警、潜地、敌人、旧我、Boss、流程与 UI 数据。
 
 **启动编辑器**
 
@@ -74,6 +75,9 @@
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/combat/hit_feedback_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/combat/attack_cost_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/enemies/enemy_hitstun_knockback_test.gd
+& "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/combat/attack_dodge_cancel_test.gd
+& "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/combat/attack_weight_test.gd
+& "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/enemies/enemy_telegraph_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --quit-after 120
 ```
 
