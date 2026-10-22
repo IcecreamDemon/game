@@ -49,6 +49,7 @@
 │   │   ├── twelve-zodiac-project-bible.md      # 项目设定总览（单一事实源）
 │   │   ├── twelve-zodiac-project-bible.html    # 网页版，便于阅读与打印
 │   │   ├── twelve-zodiac-project-bible.pdf     # 导出 PDF
+│   │   ├── art-asset-prompts.md                # 角色/场景/UI/特效生成提示词库
 │   │   └── concept-art                         # 概念图
 │   │       ├── 01-cover-key-art-unified.jpeg
 │   │       ├── 02-zodiac-lineup-unified.jpeg
@@ -100,6 +101,10 @@ Windows 构建：
 ### [作品集概念设计案](docs/portfolio/zodiac-roguelite-portfolio.html)
 
 面向展示的整合案，包含世界观、角色、系统与概念图排版，可直接用浏览器打开或打印导出 PDF。
+
+### [美术资产提示词库](docs/game-design/art-asset-prompts.md)
+
+包含统一风格前缀、负面提示、角色分件、三种敌人、旧我、Boss、无雨乡场景、UI、VFX 和结束插画的生成提示词。所有新素材必须先锁定风格，再批量制作。
 
 ### Godot Demo 技术设计与交接
 
