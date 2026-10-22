@@ -22,13 +22,14 @@
 - 节点奖励已接入实际数值：香火货币、祝安商店购买、精英战利品三选一、旧我残页证据和生命/气/架势/伤害成长。
 - 精准格挡拥有独立反馈：额外命中停顿、朱红“格”印章、屏幕闪光、墨圈、短促镜头推近、HUD 气/势脉冲和武器色差异。
 - 主入口从标题界面开始；`Esc` 可打开暂停菜单，支持继续、重试当前节点、操作说明、返回标题和退出。主流程常驻调试文字已隐藏。
+- 基础音频已接入：程序生成的轻/重命中、格挡、精准格挡、闪避、潜地、破土、UI 和敌人死亡音效通过 12 路播放器池播放；暂停菜单可调节并持久保存主音量。
 - 玩家普通攻击和武技均只消耗势，不再消耗气；气只用于防御、闪避和潜地。
 - 势除攻击命中获取外，默认以每秒 `2` 点缓慢自然恢复；进入攻击状态后停止自然回复，直到整套连招结束或攻击被打断。普通轻击消耗 `8`、终结技 `12–15`、重击/砸地/地面追击 `20`、破土攻击 `15`。
 - 敌人普通受击会根据 `AttackData.knockback` 产生水平击退，并根据 `hitstun_frames` 进入僵直。
 - Git：可从 `E:\twelfe` 直接运行 Git 命令；元数据位于
   `E:\game plant\.git-twelfe-state\.git`。
 - Windows 构建：`E:\twelfe\build\windows\TwelveZodiacDemo.exe`，2026-10-20 已通过 headless 启动验证。
-- 自动测试：`E:\twelfe\tests` 下共 42 个 GDScript 测试脚本，覆盖战斗、换武、精准格挡反馈、取消窗口、出招预警、攻击位移、平台碰撞、商店奖励、标题/暂停、潜地、敌人、旧我、Boss、流程与 UI 数据。
+- 自动测试：`E:\twelfe\tests` 下共 44 个 GDScript 测试脚本，覆盖战斗、换武、精准格挡反馈、取消窗口、出招预警、攻击位移、平台碰撞、商店奖励、标题/暂停、音频、潜地、敌人、旧我、Boss、流程与 UI 数据。
 
 **启动编辑器**
 
@@ -90,6 +91,8 @@
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/combat/parry_feedback_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/ui/ui_shell_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/flow/pause_restart_test.gd
+& "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/audio/audio_manager_test.gd
+& "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/audio/audio_event_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --quit-after 120
 ```
 
