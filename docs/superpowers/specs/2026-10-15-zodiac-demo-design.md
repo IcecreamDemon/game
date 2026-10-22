@@ -20,13 +20,14 @@
 - 攻击带按招式配置的前冲位移：轻击轻微前移、突进技明显位移、重击向前压进；主流程平台使用单向碰撞。
 - 短刃与长枪拥有独立可见武器模型；换武会播放对应武器的换武攻击，HUD 显示当前武器名称。
 - 节点奖励已接入实际数值：香火货币、祝安商店购买、精英战利品三选一、旧我残页证据和生命/气/架势/伤害成长。
+- 精准格挡拥有独立反馈：额外命中停顿、朱红“格”印章、屏幕闪光、墨圈、短促镜头推近、HUD 气/势脉冲和武器色差异。
 - 玩家普通攻击和武技均只消耗势，不再消耗气；气只用于防御、闪避和潜地。
 - 势除攻击命中获取外，默认以每秒 `2` 点缓慢自然恢复；进入攻击状态后停止自然回复，直到整套连招结束或攻击被打断。普通轻击消耗 `8`、终结技 `12–15`、重击/砸地/地面追击 `20`、破土攻击 `15`。
 - 敌人普通受击会根据 `AttackData.knockback` 产生水平击退，并根据 `hitstun_frames` 进入僵直。
 - Git：可从 `E:\twelfe` 直接运行 Git 命令；元数据位于
   `E:\game plant\.git-twelfe-state\.git`。
 - Windows 构建：`E:\twelfe\build\windows\TwelveZodiacDemo.exe`，2026-10-20 已通过 headless 启动验证。
-- 自动测试：`E:\twelfe\tests` 下共 39 个 GDScript 测试脚本，覆盖战斗、换武、取消窗口、出招预警、攻击位移、平台碰撞、商店奖励、潜地、敌人、旧我、Boss、流程与 UI 数据。
+- 自动测试：`E:\twelfe\tests` 下共 40 个 GDScript 测试脚本，覆盖战斗、换武、精准格挡反馈、取消窗口、出招预警、攻击位移、平台碰撞、商店奖励、潜地、敌人、旧我、Boss、流程与 UI 数据。
 
 **启动编辑器**
 
@@ -85,6 +86,7 @@
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/flow/platform_structure_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/combat/weapon_switch_presence_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/flow/shop_reward_test.gd
+& "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --script res://tests/combat/parry_feedback_test.gd
 & "E:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe" --headless --path "E:\twelfe" --quit-after 120
 ```
 
